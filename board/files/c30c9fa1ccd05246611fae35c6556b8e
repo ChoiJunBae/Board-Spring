@@ -1,0 +1,16 @@
+url_base : https://api.openweathermap.org/data/2.5/weather?q=
+query: user input
+API Key : b2db8accc6ec05516f88f15ac5e84430
+
+날씨 API URI --> url_base + query + &units=metric&APPID= + API Key
+--> https://api.openweathermap.org/data/2.5/weather?q=seoul&units=metric&APPID=b2db8accc6ec05516f88f15ac5e84430
+
+음악 API KEY : 8bc9b177dcd1f94d87cb453ef76ca8ce
+
+구글 API
+테스트 : https://www.googleapis.com/youtube/v3/search?part=snippet&q=kpop+music&key=AIzaSyDMuWwweIbcucrUUDx2A0JS17QxwpY_erw
+API KEY : AIzaSyDMuWwweIbcucrUUDx2A0JS17QxwpY_erw
+
+
+국내 음악
+API : http://api.kcisa.kr/openapi/service/rest/meta9/get20150030?serviceKey=3fca43ab-a769-4820-b332-e0c14bb413d2&numOfRows=10
