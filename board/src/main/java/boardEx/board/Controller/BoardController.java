@@ -22,7 +22,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-@Controller
+@CrossOrigin("*")
+@RestController
 public class BoardController {
     private BoardService boardService;
     private FileService fileService;
@@ -32,11 +33,11 @@ public class BoardController {
         this.fileService = fileService;
     }
 
-    @GetMapping("/home")
-    public String list(Model model) {
+    @GetMapping ("/home")
+    public List<BoardDto> list(Model model) {
         List<BoardDto> boardDtoList = boardService.getBoardList();
         model.addAttribute("postList", boardDtoList);
-        return "board/list.html";
+        return boardDtoList;
     }
 
     @GetMapping("/post")
