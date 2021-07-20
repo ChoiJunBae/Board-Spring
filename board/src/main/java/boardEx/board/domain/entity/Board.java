@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Entity
@@ -30,9 +31,6 @@ public class Board {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column
-    private Long fileId;
-
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdDate;
@@ -41,11 +39,15 @@ public class Board {
     private LocalDateTime modifiedDate;
 
     @Builder
-    public Board(Long id, String author, String title, String content, Long fileId) {
+    public Board(Long id, String author, String title, String content) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.content = content;
-        this.fileId = fileId;
+    }
+    
+    //게시판 수정
+    public void changed(){
+        
     }
 }

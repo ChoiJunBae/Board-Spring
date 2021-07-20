@@ -1,6 +1,7 @@
 package boardEx.board.dto;
 
 import boardEx.board.domain.entity.Board;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,8 @@ public class BoardDto {
     private String author;
     private String title;
     private String content;
-    private Long fileId;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd ' | ' HH:mm")
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -24,18 +26,16 @@ public class BoardDto {
                 .author(author)
                 .title(title)
                 .content(content)
-                .fileId(fileId)
                 .build();
         return build;
     }
 
     @Builder
-    public BoardDto(Long id, String author, String title, String content, Long fileId, LocalDateTime createdDate, LocalDateTime modifiedDate) {
+    public BoardDto(Long id, String author, String title, String content, LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.content = content;
-        this.fileId = fileId;
         this.createdDate = createdDate;
         this.modifiedDate = modifiedDate;
     }

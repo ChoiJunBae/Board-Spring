@@ -1,6 +1,6 @@
 <template>
   <div>
-      수정 하기
+      수정 페이지
   </div>
 </template>
 

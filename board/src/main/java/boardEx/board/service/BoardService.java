@@ -2,6 +2,7 @@ package boardEx.board.service;
 
 import boardEx.board.domain.entity.Board;
 import boardEx.board.domain.repository.BoardRepository;
+import boardEx.board.domain.repository.ChangeBoardRepository;
 import boardEx.board.dto.BoardDto;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,13 @@ import java.util.List;
 public class BoardService {
 
     private BoardRepository boardRepository;
+    private ChangeBoardRepository changeBoardRepository;
 
     public BoardService(BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
     }
 
+    //게시물 등록
     @Transactional
     public Long savePost(BoardDto boardDto) {
         return boardRepository.save(boardDto.toEntity()).getId();
@@ -51,7 +54,20 @@ public class BoardService {
                 .author(board.getAuthor())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .fileId(board.getFileId())
+                .createdDate(board.getCreatedDate())
+                .build();
+        return boardDto;
+    }
+
+    //게시물 수정
+    @Transactional
+    public BoardDto changeBoard(Long boardId){
+        Board board = changeBoardRepository.findOne(boardId);
+
+        BoardDto boardDto = BoardDto.builder()
+                .author(board.getAuthor())
+                .title(board.getTitle())
+                .content(board.getContent())
                 .createdDate(board.getCreatedDate())
                 .build();
         return boardDto;
