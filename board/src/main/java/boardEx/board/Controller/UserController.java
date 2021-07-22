@@ -29,14 +29,14 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public String signup(@RequestBody SignUpDto signUpDto) {
+    public Long signup(@RequestBody SignUpDto signUpDto) {
         User user = new User();
         user.setName(signUpDto.getName());
         user.setEmail(signUpDto.getEmail());
         user.setPassword(signUpDto.getPassword());
         user.setLocation(signUpDto.getLocation());
 
-        String response = userService.join(user);
+        Long response = userService.join(user);
         return response;
     }
 

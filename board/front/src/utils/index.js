@@ -6,11 +6,11 @@ function fetchData(){
     return response;
 }
 
-// function login(){
-//     const response = axios.get('http://localhost:8080/login');
-//     return response;
-// }
+function getMyList(){
+    const response = axios.get('http://localhost:8080/mylist');
+    return response;
+}
 
 export{
-    fetchData
+    fetchData, getMyList
 }

@@ -24,12 +24,6 @@ public class BoardController {
         return boardDtoList;
     }
 
-    @PutMapping("/detail/{boardId}")
-    public String ChangeBoard(@PathVariable("boardId") Long boardId){
-        boardService.changeBoard(boardId);
-        return "수정 성공";
-    }
-
     @GetMapping("/post")
     public String post() {
         return "board/post.html";

@@ -2,8 +2,9 @@ package boardEx.board.service;
 
 import boardEx.board.domain.entity.Board;
 import boardEx.board.domain.repository.BoardRepository;
-import boardEx.board.domain.repository.ChangeBoardRepository;
+
 import boardEx.board.dto.BoardDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,14 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BoardService {
 
-    private BoardRepository boardRepository;
-    private ChangeBoardRepository changeBoardRepository;
-
-    public BoardService(BoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
-    }
+    private final BoardRepository boardRepository;
 
     //게시물 등록
     @Transactional
@@ -60,21 +57,21 @@ public class BoardService {
     }
 
     //게시물 수정
-    @Transactional
-    public BoardDto changeBoard(Long boardId){
-        Board board = changeBoardRepository.findOne(boardId);
-
-        BoardDto boardDto = BoardDto.builder()
-                .author(board.getAuthor())
-                .title(board.getTitle())
-                .content(board.getContent())
-                .createdDate(board.getCreatedDate())
-                .build();
-        return boardDto;
-    }
-
-    @Transactional
-    public void deletePost(Long id) {
-        boardRepository.deleteById(id);
-    }
+//    @Transactional
+//    public BoardDto changeBoard(Long boardId){
+//        Board board = changeBoardRepository.findOne(boardId);
+//
+//        BoardDto boardDto = BoardDto.builder()
+//                .author(board.getAuthor())
+//                .title(board.getTitle())
+//                .content(board.getContent())
+//                .createdDate(board.getCreatedDate())
+//                .build();
+//        return boardDto;
+//    }
+//
+//    @Transactional
+//    public void deletePost(Long id) {
+//        boardRepository.deleteById(id);
+//    }
 }

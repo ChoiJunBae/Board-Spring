@@ -1,10 +1,11 @@
 <template>
-  <v-card class="pa-5">
+  <v-card class="pa-5" width="1000px" style="margin:auto">
+    <h2 class="pa-5" style="text-align:center; background-color:#8E24AA33; border-radius:16px 16px 0 0">게시글 등록하기</h2>
     <form v-on:submit.prevent="submitForm">
       <v-text-field
           color="#8E24AA"
           v-model="title"
-          class="font-weight-black"
+          class="font-weight-black mt-5"
           label="제목"
           required
           outlined
@@ -17,20 +18,20 @@
           class="font-weight-black"
           label="작성자"
           required
-          outlined
-          placeholder="이름을 입력해주세요."
-         
+          outlined    
+          disabled      
       ></v-text-field>
       <v-text-field
           color="#8E24AA"
           v-model="content"
+          height="300px"
           :counter="100"
           class="font-weight-black"
           outlined
           placeholder="내용을 입력해주세요. (최대 100자)"
           label="내용"
           required
-          
+          style="border-radius:0 0 16px 16px"
       ></v-text-field>
       <!-- <v-file-input class="mb-5 font-weight-black"
           v-model="file"
@@ -40,10 +41,10 @@
       ></v-file-input> -->
       <v-row class="ma-3">
         <v-spacer></v-spacer>
-        <v-btn style="border-radius:13px" class="mr-4" @click="clear" color="#8E24AA44">
+        <v-btn class="subButton mr-4" style="border-radius:13px"  @click="clear" color="#8E24AA44">
           <v-icon>mdi-reload</v-icon>
         </v-btn>
-        <v-btn style="border-radius:13px" type="submit" color="#8E24AA44">
+        <v-btn class="subButton" style="border-radius:13px" type="submit" color="#8E24AA44">
           <v-icon>mdi-send</v-icon>
         </v-btn>
       </v-row>
@@ -57,6 +58,9 @@
 import axios from 'axios'
 
 export default {
+  created(){
+    this.author=localStorage.getItem('name')
+  },
   data:() =>{
     return{  
 
@@ -102,5 +106,8 @@ export default {
 </script>
 
 <style>
-
+.subButton{
+  width: 100px;
+  height: 100px;
+}
 </style>

@@ -17,7 +17,12 @@ public class UserRepository {
     // 회원정보 DB에 저장
     public Long save(User user) {
         em.persist(user);
-        return user.getId();
+        return user.getId(); //id 값 반환을 통해 정상 저장 확인
+    }
+
+    // 단일 회원 사용
+    public User findOne(Long id){
+        return em.find(User.class, id);
     }
 
     // 이메일로 회원 찾기

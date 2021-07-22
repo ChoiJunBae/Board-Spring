@@ -1,53 +1,48 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-// import Main from '../views/Main'
-import Weather from "../views/Weather"
-import Detail from "../views/detail"
-import List from "../views/list"
+import MainPage from "../views/MainPage"
+import Board from "../views/Board"
 import Post from "../views/post"
-import Edit from "../views/edit"
 import SignUp from "../views/SignUp"
-import Chart from "../views/Chart"
+import Recommend from "../views/Recommend"
+import MyList from "../views/MyList"
 
 Vue.use(VueRouter);
 
 const routes =[
-    {
+    {   //날씨 정보 확인하기
         path:'/',
-        name:'Weather',
-        component:Weather
+        name:'MainPage',
+        component:MainPage
+    },
+    {   //라리 유튜브 추천
+        path:'/recommend',
+        name:'Recommend',
+        component:Recommend
     },
     {
+        path:'/mylist',
+        name:'MyList',
+        component:MyList
+    },
+    {   //게시판 확인
+        path:'/board',
+        name:'Board',
+        component:Board
+    },
+    {   //게시판 작성
         path:'/post',
         name:'Post',
         component:Post
     },
-    {
-        path:'/detail',
-        name:'Detail',
-        component:Detail
-    },
-    {
-        path:'/list',
-        name:'List',
-        component:List
-    },
-    {
-        path:'/edit',
-        name:'Edit',
-        component:Edit
-    },
-    {
+    
+    {   //회원가입
         path:'/signUp',
         name:'SignUp',
         component:SignUp
     },
-    {
-        path:'/chart',
-        name:'Chart',
-        component:Chart
-    }  
+    
 ];
 
 const router = new VueRouter({

@@ -1,66 +1,71 @@
 <template>
     <div id="app2" :class="typeof weather.main != 'undefined'
-        && (this.weather.weather[0].main) == 'Clouds' ? 'cloud':''
-        && (this.weather.weather[0].main) == 'Rain' ? 'rain':''
-        ">
-      <v-container>
-        <v-row>
-          <v-col>
-            <main>
-              <div class="weatherMain">
-                <div class="location-box">
-                  <span style="color:#8E24AA font-weight-black" class="location">{{this.query}}</span>
-                  <span style="color:#8E24AA " class="text-h5">의 현재 날씨</span>
-                  <div style="color:#8E24AA"  class="date">{{ dateBuilder() }}</div>
+      && (this.weather.weather[0].main) == 'Clouds' ? 'cloud':''
+      && (this.weather.weather[0].main) == 'Rain' ? 'rain':''
+    ">
+      <main class="mainSet">
+        <v-container>
+          <v-row>
+            <v-col>
+              <main>
+                <div class="weatherMain">
+                  <div class="location-box">
+                    <div class="mb-6">
+                      <span style="color:#F3E5F5; font-weight:bold" class="mb-6 text-h3">{{this.name}}</span>
+                      <span style="color:white" class="text-h5">님 반갑습니다.</span>
+                    </div>
+                    <span style="color:#F3E5F5" class="text-h3">{{this.query}}</span>
+                    <span style="color:#E1BEE7" class="text-h4">의 현재 날씨</span>
+                    <div style="color:#E1BEE7"  class="date">{{ dateBuilder() }}</div>
+                  </div>
+                  <div class="weather-box">
+                    <div style="color:#E1BEE7"  class="check_temp">{{ Math.round(weather.main.temp) }}℃</div>  
+                    <div style="color:#E1BEE7"  class="weather">{{ this.condition }}</div>
+                  </div>
                 </div>
-                <div class="weather-box">
-                  <div style="color:#8E24AAee"  class="temp">{{ Math.round(weather.main.temp) }}℃</div>  
-                  <div style="color:#8E24AAaa"  class="weather">{{ this.condition }}</div>
-                </div>
-              </div>
-            </main>
-          </v-col>
-          <v-col>
-            <canvas id="myChart" width="400" height="200"></canvas>
-          </v-col>
-        </v-row>
-      </v-container>
+              </main>
+            </v-col>
+            <v-col>
+              <v-container id="chart">
+                <canvas white class="pt-8 pb-8" id="myChart" height="500px"></canvas>
+              </v-container>
+            </v-col>
+          </v-row>
+        </v-container>
+      </main>
     </div>
 </template>
 
 <script> 
 import Chart from 'chart.js/auto'
-import {fetchBusan, fetchDeajeon, fetchGwang, fetchSoeul} from '../api/index';
+import {fetchBusan, fetchDeajeon, fetchGwang, fetchJeju, fetchSoeul} from '../api/index';
 
 export default {
   //시작과 동시에 fetchWeather를 실행하여한다.
   created(){
+    this.name=localStorage.getItem('name');
     this.query=localStorage.getItem('location');
     this.fetchWeather();
   },
 
   async mounted(){
     await this.getData();
+    Chart.defaults.font.size=24;
+    Chart.defaults.color='#ffffff';
     var ctx = document.getElementById('myChart');
-    var myChart = new Chart(ctx, {
+    const myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['서울', '부산', '광주', '대구'],
+        labels: ['서울', '부산', '광주', '대구', '제주'],
         datasets: [{
-          label: '각 지역의 온도 정보',
+          label: '온도',
           data: [this.w_seoul.main.temp, this.w_busan.main.temp, 
-                  this.w_gwangju.main.temp, this.w_daejeon.main.temp],
+                this.w_gwangju.main.temp, this.w_daejeon.main.temp, 
+                this.w_jeju.main.temp],
           backgroundColor: [
-              'rgba(255, 99, 132, 0.7)',
-          ],
-      }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
+            '#E1BEE7',
+          ]
+        }]
       }
     });
     console.log(myChart);
@@ -69,6 +74,9 @@ export default {
   // data 정의부
   data: function () {
     return {
+      name:'',
+      mainText:'',
+
       api_key: "b2db8accc6ec05516f88f15ac5e84430",
       url_base: "https://api.openweathermap.org/data/2.5/",
       query: '',
@@ -127,16 +135,16 @@ export default {
           this.condition = '이슬비'
           break;
         case 'Rain':
-          this.condition = '비'
+          this.condition = '비오는 날씨'
           break;
         case 'Snow':
           this.condition ='눈'
           break;
         case 'Clear':
-          this.condition = '맑음'
+          this.condition = '맑은 날씨'
           break;
         case 'Clouds':
-          this.condition = '흐림'
+          this.condition = '흐린 날씨'
           break;
         default:
           break;
@@ -162,17 +170,24 @@ export default {
       const busan = await fetchBusan();
       const gwangju = await fetchGwang();
       const daejeon = await fetchDeajeon();
+      const jeju = await fetchJeju();
 
       this.w_seoul = seoul.data;
       this.w_busan = busan.data;
       this.w_gwangju = gwangju.data;
       this.w_daejeon = daejeon.data;
+      this.w_jeju = jeju.data;
    },
   },
 }; 
 </script>
 
 <style>
+#chart{
+  min-height: 1000px;
+  width:500px;
+}
+
 #app2 {
   border-radius: 15px;
   background-image: url("../assets/sunny.jpg");
@@ -188,11 +203,17 @@ export default {
   background-image: url("../assets/cloud.jpg");
 }
 
+.mainSet {
+  min-height: 100vh;
+  padding: 25px;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75));
+}
+
 .weatherMain{
   padding: 30px;
 }
 
-.location-box .location {
+.location-box {
   font-size: 40px;
   font-weight: 500;
   text-shadow: 1px 3px rgba(0, 0, 0, 0.25);
@@ -204,7 +225,7 @@ export default {
   font-weight: 500; 
 }
 
-.weather-box .temp {
+.weather-box .check_temp {
   display: inline-block;
   padding: 10px 25px;
   font-size: 102px;

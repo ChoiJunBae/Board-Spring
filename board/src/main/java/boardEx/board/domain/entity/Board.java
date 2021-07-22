@@ -10,7 +10,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 @Entity
@@ -44,10 +43,5 @@ public class Board {
         this.author = author;
         this.title = title;
         this.content = content;
-    }
-    
-    //게시판 수정
-    public void changed(){
-        
     }
 }
