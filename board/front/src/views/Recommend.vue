@@ -26,12 +26,12 @@
                         :retain-focus="false"
                     >
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn-icon v-bind="attrs" v-on="on">
+                            <v-btn-icon v-bind="attrs" v-on="on" @click="setIndex(index)">
                                 <v-icon style="color:#8E24AA">mdi-playlist-plus</v-icon>
                             </v-btn-icon>
                         </template>
 
-                        <form v-on:submit.prevent="goMyList(user_title,index)">
+                        <form v-on:submit.prevent="goMyList(user_title,itemIndex)">
                             <v-card>
                                 <v-card-text>
                                     <v-container>
@@ -101,10 +101,13 @@ export default {
             source:'',  
 
             user_title:'',
-            catch_url:''
+            itemIndex :0
         }
     },
     methods:{
+        setIndex(forIndex){
+            this.itemIndex = forIndex
+        },
         async goMyList(user_title,index){     //DB에 저장할 노래 고르기
             var url = `http://localhost:8080/mylist`;
             var data = {
@@ -115,7 +118,7 @@ export default {
             try{
                 await axios.post(url, data);
                 console.log(this.user_id);
-                console.log(data);
+                console.log(index);
                 alert("등록 성공!");
             }catch(error){
                 alert("등록 실패!")

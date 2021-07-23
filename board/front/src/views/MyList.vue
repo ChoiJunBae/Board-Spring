@@ -23,7 +23,7 @@
                                     :retain-focus="false"
                                 >
                                     <template v-slot:activator="{ on, attrs }">
-                                        <v-btn-icon v-bind="attrs" v-on="on">
+                                        <v-btn-icon v-bind="attrs" v-on="on" @click="setIndex(index)">
                                             <v-icon color="#8E24AA"
                                                 default
                                                 class="mr-2">
@@ -32,7 +32,7 @@
                                         </v-btn-icon>
                                     </template>
 
-                                    <form v-on:submit.prevent="editList(list.id, change_title)">
+                                    <form v-on:submit.prevent="editList(itemIndex, change_title)">
                                         <v-card>
                                             <v-card-text>
                                                 <v-container>
@@ -98,8 +98,12 @@ export default {
         dialog:false,
         lists:[],
         playList_user:'',
+        itemIndex:0
     }),
     methods:{
+        setIndex(forIndex){
+            this.itemIndex=forIndex
+        },
         async getList(){
             //플레이 리스트 가지고 오기
             const response = await getMyList();
@@ -109,12 +113,13 @@ export default {
 
         async editList(item, title){
             console.log(item);
-            const response = await axios.put('http://localhost:8080/mylist/'+item,
+            const num = this.lists[item].id
+            const response = await axios.put('http://localhost:8080/mylist/'+num,
             {
                 title: title
             });
             console.log(response);
-            // this.$router.go(0);
+            this.$router.go(0);
         },
 
         async deleteList(item){
