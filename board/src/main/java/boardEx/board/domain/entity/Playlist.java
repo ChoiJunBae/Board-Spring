@@ -18,6 +18,10 @@ public class Playlist {
     @Column(name="playlist_id")
     private Long id;    //플레이 리스트 ID
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id" )
+    private User user;
+
     @Column(length = 100, nullable = false)
     private String title;  //노래 제목
 
@@ -32,8 +36,9 @@ public class Playlist {
     private LocalDateTime modifiedDate;
 
     @Builder
-    public Playlist(Long id, String title, String url){
+    public Playlist(Long id, User user, String title, String url){
         this.id=id;
+        this.user = user;
         this.title=title;
         this.url=url;
     }

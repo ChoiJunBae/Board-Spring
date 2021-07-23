@@ -1,6 +1,7 @@
 package boardEx.board.dto;
 
 import boardEx.board.domain.entity.Playlist;
+import boardEx.board.domain.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PlaylistDto {
     private Long id;
+    private Long user;
     private String title;
     private String url;
 
@@ -20,8 +22,12 @@ public class PlaylistDto {
     private LocalDateTime modifiedDate;
 
     public Playlist toEntity(){
+        User userTmp = new User();
+        userTmp.setId(user);
+
         Playlist build = Playlist.builder()
                 .id(id)
+                .user(userTmp)
                 .title(title)
                 .url(url)
                 .build();
@@ -29,8 +35,9 @@ public class PlaylistDto {
     }
 
     @Builder
-    public PlaylistDto(Long id, String title, String url, LocalDateTime createdDate){
+    public PlaylistDto(Long id, Long user, String title, String url, LocalDateTime createdDate){
         this.id=id;
+        this.user=user;
         this.title=title;
         this.url=url;
         this.createdDate=createdDate;

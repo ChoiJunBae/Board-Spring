@@ -27,4 +27,18 @@ public class PlaylistController {
     public Long listChange(@RequestBody PlaylistDto playlistDto){
         return playlistService.saveList(playlistDto);
     }
+
+    // 플레이 리스트 제목 변경
+    @PutMapping("/mylist/{id}")
+    public String update(@PathVariable("id")Long id, @RequestBody PlaylistDto playlistDto){
+        playlistService.modify(id, playlistDto);
+        return "플레이 리스트 추가 완료!!";
+    }
+
+    //플레이 리스트 항목 삭제
+    @DeleteMapping("/mylist/{id}")
+    public String delete(@PathVariable("id") Long id){
+        playlistService.deletePlaylist(id);
+        return "플레이 리스트 삭제 완료!!";
+    }
 }

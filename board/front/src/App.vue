@@ -16,7 +16,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn-icon v-bind="attrs" v-on="on">
-              <v-icon style="color:white">mdi-account</v-icon>
+              <v-icon style="color:white;">mdi-account</v-icon>
             </v-btn-icon>
           </template>
 
@@ -96,7 +96,6 @@
 
     <!-- 네비게이션 바-->
     <v-navigation-drawer
-        v-model="drawer"
         app
         white
         expand-on-hover
@@ -144,7 +143,8 @@
 import axios from 'axios';
 
 export default {
-  created(){
+  mounted(){
+    this.userId=localStorage.getItem('id');
     this.navName=localStorage.getItem('name');
     this.navEmail=localStorage.getItem('email');
     this.navLocation=localStorage.getItem('location'); 
@@ -160,12 +160,14 @@ export default {
     items: [
       {title: 'Lali 추천', icon: 'mdi-weather-hazy', to: '/recommend'},
       {title: 'Lali 노래 게시판', icon: 'mdi-animation-play', to: '/board'},
-      {title: 'My List 확인하기', icon: 'mdi-playlist-music-outline', to:'/mylist'},
+      {title: 'My List 확인하기', icon: 'mdi-playlist-music-outline', to: '/mylist'},
     ],
     
     email:'',
     password:'',
-    navName:'로그인하세요',
+
+    userId:'',
+    navName:'',
     navEmail:'',
     navLocation:''
   }),
@@ -196,6 +198,7 @@ export default {
         alert("아이디 비밀번호를 확인해주세요");
         this.clear()
       }else{
+        localStorage.setItem('id', response.data.findUsers[0].id);
         localStorage.setItem('name', response.data.findUsers[0].name);
         localStorage.setItem('email', response.data.findUsers[0].email);
         localStorage.setItem('location', response.data.findUsers[0].location);

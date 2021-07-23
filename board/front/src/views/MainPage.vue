@@ -1,39 +1,39 @@
 <template>
-    <div id="app2" :class="typeof weather.main != 'undefined'
-      && (this.weather.weather[0].main) == 'Clouds' ? 'cloud':''
-      && (this.weather.weather[0].main) == 'Rain' ? 'rain':''
-    ">
-      <main class="mainSet">
-        <v-container>
-          <v-row>
-            <v-col>
-              <main>
-                <div class="weatherMain">
-                  <div class="location-box">
-                    <div class="mb-6">
-                      <span style="color:#F3E5F5; font-weight:bold" class="mb-6 text-h3">{{this.name}}</span>
-                      <span style="color:white" class="text-h5">님 반갑습니다.</span>
-                    </div>
-                    <span style="color:#F3E5F5" class="text-h3">{{this.query}}</span>
-                    <span style="color:#E1BEE7" class="text-h4">의 현재 날씨</span>
-                    <div style="color:#E1BEE7"  class="date">{{ dateBuilder() }}</div>
+  <div id="app2" :class="typeof weather.main != 'undefined'
+    && (this.weather.weather[0].main) == 'Clouds' ? 'cloud':''
+    && (this.weather.weather[0].main) == 'Rain' ? 'rain':''
+  ">
+    <main class="mainSet">
+      <v-container>
+        <v-row>
+          <v-col>
+            <main>
+              <div class="weatherMain">
+                <div class="location-box">
+                  <div class="mb-6">
+                    <span style="color:#F3E5F5; font-weight:bold" class="mb-6 text-h3">{{this.name}}</span>
+                    <span style="color:white" class="text-h5">님 반갑습니다.</span>
                   </div>
-                  <div class="weather-box">
-                    <div style="color:#E1BEE7"  class="check_temp">{{ Math.round(weather.main.temp) }}℃</div>  
-                    <div style="color:#E1BEE7"  class="weather">{{ this.condition }}</div>
-                  </div>
+                  <span style="color:#F3E5F5" class="text-h3">{{this.query}}</span>
+                  <span style="color:#E1BEE7" class="text-h4">의 현재 날씨</span>
+                  <div style="color:#E1BEE7"  class="date">{{ dateBuilder() }}</div>
                 </div>
-              </main>
-            </v-col>
-            <v-col>
-              <v-container id="chart">
-                <canvas white class="pt-8 pb-8" id="myChart" height="500px"></canvas>
-              </v-container>
-            </v-col>
-          </v-row>
-        </v-container>
-      </main>
-    </div>
+                <div class="weather-box">
+                  <div style="color:#E1BEE7"  class="check_temp">{{ Math.round(weather.main.temp) }}℃</div>  
+                  <div style="color:#E1BEE7"  class="weather">{{ this.condition }}</div>
+                </div>
+              </div>
+            </main>
+          </v-col>
+          <v-col>
+            <v-container id="chart">
+              <canvas white class="pt-8 pb-8" id="myChart" height="500px"></canvas>
+            </v-container>
+          </v-col>
+        </v-row>
+      </v-container>
+    </main>
+  </div>
 </template>
 
 <script> 

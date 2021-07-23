@@ -31,7 +31,7 @@
                             </v-btn-icon>
                         </template>
 
-                        <form v-on:submit.prevent="goMyList(user_title, player.url)">
+                        <form v-on:submit.prevent="goMyList(user_title,index)">
                             <v-card>
                                 <v-card-text>
                                     <v-container>
@@ -39,7 +39,7 @@
                                             v-model="user_title"
                                             label="제목 입력"
                                             hint="어떤 제목으로 저장할지 입력해주세요!"
-                                            persistent-hint
+                                            persistent-hints
                                             required
                                             color="#8E24AA"
                                         >
@@ -82,12 +82,15 @@ import axios from 'axios'
 
 export default {
     created(){
+        this.user_id=parseInt( localStorage.getItem('id'));
         this.youtube()
+        console.log(this.players);
     }, 
     data: function(){
         return{
             dialog:false,
 
+            user_id:0,
             user_name:'',
             user_condition:'',
             
@@ -98,17 +101,20 @@ export default {
             source:'',  
 
             user_title:'',
+            catch_url:''
         }
     },
     methods:{
-        async goMyList(user_title,get_url){     //DB에 저장할 노래 고르기
+        async goMyList(user_title,index){     //DB에 저장할 노래 고르기
             var url = `http://localhost:8080/mylist`;
             var data = {
+                user:this.user_id,
                 title:user_title,
-                url:get_url,
+                url:this.players[index].url
             }
             try{
                 await axios.post(url, data);
+                console.log(this.user_id);
                 console.log(data);
                 alert("등록 성공!");
             }catch(error){
@@ -145,6 +151,7 @@ export default {
                     }
                 }
                 this.players=this.list
+                console.log(this.players);
             }else{
                 alert('로그인 후 사용 부탁드립니다.')
                 this.$router.push('/')

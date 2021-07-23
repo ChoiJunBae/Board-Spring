@@ -127,6 +127,8 @@
   </v-container>
 </template>
 <script>
+import axios from 'axios'
+// import axios from 'axios'
 import { fetchData } from '../utils/index'
 // import axios from 'axios'
 
@@ -178,24 +180,30 @@ import { fetchData } from '../utils/index'
         this.desserts= response.data;    
       },
 
-      // 게시글 수정하기
+      /**
+       * 게시글 수정하기
+       */
       editItem (item) {
-        this.id = this.desserts.indexOf(item)
+        this.id= this.desserts.indexOf(item)
         this.editedItem = Object.assign({}, item)
+        // const response = await axios.put(this.editedItem.id) 
         this.dialog = true
       },
-
-      // 게시글 삭제하기
-      deleteItem (item) {
-        this.editedItem = Object.assign({}, item)
-        this.dialogDelete = true
+      // 게시글 수정부
+      async save () {
+        Object.assign(this.desserts[this.id], this.editedItem)
+        // console.log(this.editedItem.id);
+        // console.log(this.desserts[this.id]);
+        const response = await axios.put('http://localhost:8080/post/'+this.editedItem.id,
+          {
+            title: this.editedItem.title,
+            author: this.editedItem.author,
+            content: this.editedItem.content
+          });
+        console.log("< 수정된 정보 >");
+        console.log(response);
+        this.close()
       },
-
-      deleteItemConfirm () {
-        this.desserts.splice(this.editedIndex, 1)
-        this.closeDelete()
-      },
-
       close () {
         this.dialog = false
         this.$nextTick(() => {
@@ -203,17 +211,26 @@ import { fetchData } from '../utils/index'
         })
       },
 
+      /**
+       * 게시글 삭제하기
+       */
+      deleteItem (item) {
+        this.editedItem = Object.assign({}, item)
+        this.dialogDelete = true
+      },
+      //게시글 삭제부
+      async deleteItemConfirm () {
+        this.desserts.splice(this.editedIndex, 1)
+        const response = await axios.delete('http://localhost:8080/post/'+this.editedItem.id)
+        console.log("< 삭제된 정보 >");
+        console.log(response);
+        this.closeDelete()
+      },
       closeDelete () {
         this.dialogDelete = false
         this.$nextTick(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
         })
-      },
-
-      save () {
-        Object.assign(this.desserts[this.id], this.editedItem)
-        this.close()
-
       },
     }
   }

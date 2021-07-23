@@ -34,4 +34,20 @@ public class BoardController {
     public Long write(@RequestBody BoardDto boardDto) {
         return boardService.savePost(boardDto);
     }
+
+    //게시물 수정한 내용 받아서 돌려주기
+    @PutMapping("/post/{id}")
+    public String update(@PathVariable("id")Long id,@RequestBody BoardDto boardDto ){
+
+                        // 찾을 게시물 아이디, 수정할 데이터 DTO
+        boardService.modify(id,boardDto);
+        return "수정 완료!!";
+    }
+
+
+    @DeleteMapping("/post/{id}")
+    public String delete(@PathVariable("id") Long id){
+        boardService.deletePost(id);
+        return "삭제 완료!!";
+    }
 }

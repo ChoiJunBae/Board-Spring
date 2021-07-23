@@ -22,4 +22,6 @@ public class User {
     private String password;
     private String location;
 
+    @OneToMany(mappedBy = "user")
+    private List<Playlist> playlists = new ArrayList<>();
 }
